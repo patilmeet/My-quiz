@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panda Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('your_panda_background_image_url') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .quiz-container {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      width: 60%;
+      text-align: center;
+    }
+    .question {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .options {
+      list-style-type: none;
+      padding: 0;
+    }
+    .options li {
+      margin: 10px 0;
+      padding: 15px;
+      background-color: #333;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+    .options li:hover {
+      background-color: #444;
+    }
+    .correct {
+      background-color: green;
+      animation: blink-green 1s infinite;
+    }
+    .incorrect {
+      background-color: red;
+      animation: blink-red 1s infinite;
+    }
+    @keyframes blink-green {
+      0% { background-color: green; }
+      50% { background-color: lightgreen; }
+      100% { background-color: green; }
+    }
+    @keyframes blink-red {
+      0% { background-color: red; }
+      50% { background-color: lightcoral; }
+      100% { background-color: red; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div class="question">Which is my favorite season?</div>
+  <ul class="options">
+    <li onclick="checkAnswer(this, true, 'winter.jpg')">Winter</li>
+    <li onclick="checkAnswer(this, false, 'summer.jpg')">Summer</li>
+    <li onclick="checkAnswer(this, false, 'monsoon.jpg')">Monsoon</li>
+    <li onclick="checkAnswer(this, false, 'autumn.jpg')">Autumn</li>
+  </ul>
+</div>
+
+<audio id="correct-sound" src="correct_answer_sound.mp3"></audio>
+<audio id="wrong-sound" src="wrong_answer_sound.mp3"></audio>
+
+<script>
+  function checkAnswer(option, isCorrect, backgroundImage) {
+    const sound = isCorrect ? document.getElementById('correct-sound') : document.getElementById('wrong-sound');
+    sound.play();
+
+    // Change background of the option clicked
+    option.style.backgroundImage = `url('${backgroundImage}')`;
+    option.style.backgroundColor = 'transparent'; // Remove the default background
+
+    if (isCorrect) {
+      option.classList.add('correct');
+      alert('Boss answer brobar aahe!');
+    } else {
+      option.classList.add('incorrect');
+      alert('Sarkit wrong answer!');
+    }
+
+    disableOptions();
+  }
+
+  function disableOptions() {
+    const options = document.querySelectorAll('.options li');
+    options.forEach(option => {
+      option.style.pointerEvents = 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
